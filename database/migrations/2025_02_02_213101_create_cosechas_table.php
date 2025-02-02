@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cosecha', function (Blueprint $table) {
+        Schema::create('cosechas', function (Blueprint $table) {
             $table->bigIncrements('id_cosecha');
             $table->string('fecha_inicio');
             $table->string('fecha_final')->nullable();

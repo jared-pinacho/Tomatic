@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detalle_venta', function (Blueprint $table) {
-           
-
+        Schema::create('detalle_pedido', function (Blueprint $table) {
+          
             $table->string('cantidad');
-            $table->string('subtotal');
+            
 
-            $table->bigInteger('id_usuario')->unsigned();
-            $table->bigInteger('id_cliente')->unsigned();
+            $table->bigInteger('id_pedido')->unsigned();
+            $table->bigInteger('id_producto')->unsigned();
 
-            $table->foreign('id_cliente')->references('id_cliente')->on('clientes');
-            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios');
+            $table->foreign('id_pedido')->references('id_pedido')->on('pedidos');
+            $table->foreign('id_producto')->references('id_producto')->on('productos');
+
 
             $table->softDeletes();
             $table->timestamps();
@@ -33,6 +33,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detalle_venta');
+        Schema::dropIfExists('detalle_pedido');
     }
 };
+
