@@ -13,7 +13,7 @@ class Cliente extends Model
 
     protected $primaryKey = 'id_cliente';
 
-    protected $fillable = ['nombre','apellido','username','telefono'];
+    protected $fillable = ['nombre','apellido','telefono'];
 
     protected $casts = [
         'id_cliente' => 'string', 
