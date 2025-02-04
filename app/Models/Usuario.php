@@ -20,6 +20,12 @@ class Usuario extends Model
         'id_usuario' => 'string', 
     ];
 
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     public function ventas(){
         return $this->hasMany(Venta::class,'id_usuario');
     }

@@ -3,5 +3,14 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'Servidor en Linea :)';
 });
+
+
+
+
+//Route::get('/usuarios/{id}',[UsuarioController::class,'regresaUsuario']);
+
+
+
+
