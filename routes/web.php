@@ -9,8 +9,5 @@ Route::get('/', function () {
 
 
 
-//Route::get('/usuarios/{id}',[UsuarioController::class,'regresaUsuario']);
-
-
 
 

@@ -12,3 +12,4 @@ Route::get('/user', function (Request $request) {
 Route::resource('usuario',UsuarioController::class)
 ->except(['edit','create'])
 ;
+

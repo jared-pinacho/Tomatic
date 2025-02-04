@@ -20,7 +20,6 @@ class Usuario extends Model
         'id_usuario' => 'string', 
     ];
 
-
     protected $hidden = [
         'password',
         'remember_token',
