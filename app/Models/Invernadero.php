@@ -13,7 +13,7 @@ class Invernadero extends Model
 
     protected $primaryKey = 'id_invernadero';
 
-    protected $fillable = ['fecha_creacion','dimension'];
+    protected $fillable = ['nombre','dimension','fecha_creacion'];
 
     protected $casts = [
         'id_invernadero' => 'string', 

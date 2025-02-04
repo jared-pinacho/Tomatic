@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('invernaderos', function (Blueprint $table) {
             $table->bigIncrements('id_invernadero');
+            $table->string("nombre")->unique();
             $table->string('fecha_creacion');
             $table->string('dimension');
             $table->timestamps();
