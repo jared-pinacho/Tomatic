@@ -13,7 +13,7 @@ class Cosecha extends Model
 
     protected $primaryKey = 'id_cosecha';
 
-    protected $fillable = ['fecha_inicio','fecha_final','nombre','id_invernadero'];
+    protected $fillable = ['fecha_inicio','fecha_final','nombre','estado','monto_total','id_invernadero'];
 
     protected $casts = [
         'id_cosecha' => 'string', 

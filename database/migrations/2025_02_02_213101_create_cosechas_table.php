@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('fecha_inicio');
             $table->string('fecha_final')->nullable();
             $table->string('nombre');
+            $table->integer('estado');
+            $table->string('monto_total')->nullable();
 
             $table->bigInteger('id_invernadero')->unsigned();
 
