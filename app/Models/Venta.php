@@ -14,16 +14,16 @@ class Venta extends Model
 
     protected $primaryKey = 'id_venta';
 
-    protected $fillable = ['fecha', 'total', 'id_usuario', 'id_cliente'];
+    protected $fillable = ['fecha', 'total', 'id_empleado', 'id_cliente'];
 
     protected $casts = [
         'id_venta' => 'string',
     ];
 
 
-    public function usuario () 
+    public function empleado () 
     {
-        return $this->belongsTo(Usuario::class,'id_usuario');
+        return $this->belongsTo(Empleado::class,'id_empleado');
     }
 
     public function cliente()

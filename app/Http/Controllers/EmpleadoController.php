@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Usuario;
+use App\Models\Empleado;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Responses\ApiResponses;
@@ -13,7 +13,7 @@ use Exception;
 
 use Illuminate\Support\Facades\Hash;
 
-class UsuarioController extends Controller
+class EmpleadoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,11 +22,11 @@ class UsuarioController extends Controller
     {
 
         try {
-            $usuarios = Usuario::all();
+            $empleados= Empleado::all();
 
-            return ApiResponses::success('Encontrado', 200, $usuarios);
+            return ApiResponses::success('Encontrado', 200, $empleados);
         } catch (ModelNotFoundException $e) {
-            return ApiResponses::error('Error: usuarios no encontrados', 404);
+            return ApiResponses::error('Error: empleados no encontrados', 404);
         } catch (Exception $e) {
             // Handle general exceptions (e.g., database errors)
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
@@ -51,15 +51,14 @@ class UsuarioController extends Controller
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
             'apellido' => 'required',
-            'username' => 'required|unique:usuarios,username',
-            'password' => 'required',
-            'rol' => 'required'
+            'edad' => 'required',
+            'sexo' => 'required',
+            'rol' => 'required',
         ]);
 
         if ($validator->fails()) {
 
             $data = [
-
                 'message' => 'Error en la validacion de datos',
                 'errors' => $validator->errors(),
                 'status' => 400
@@ -69,25 +68,25 @@ class UsuarioController extends Controller
         }
 
 
-        $usuario = Usuario::create([
+        $empleado = Empleado::create([
             'nombre' => $request->nombre,
             "apellido" => $request->apellido,
-            "username" => $request->username,
-            'password' => Hash::make($request->password), // Encriptar la contraseña
-            "rol" => $request->rol
+            "edad" => $request->edad,
+            "sexo" => $request->sexo,
+            "rol" => $request->rol,
         ]);
 
-        if (!$usuario) {
+        if (!$empleado) {
             $data = [
-                'message' => 'Error al crear usuario',
+                'message' => 'Error al crear empleado',
                 'status' => 500
             ];
             return response()->json($data,500);
         }
 
         return response()->json([
-            'usuario' => $usuario,
-            'message' => 'Usuario creado exitosamente',
+            'empleado' => $empleado,
+            'message' => 'Empleado creado exitosamente',
             'status' => 201
         ], 201);
 
@@ -101,11 +100,11 @@ class UsuarioController extends Controller
     {
 
         try {
-            $usuario = Usuario::where('id_usuario', $id)->firstOrFail();
+            $empleado = Empleado::where('id_empleado', $id)->firstOrFail();
 
-            return ApiResponses::success('Encontrado', 200, $usuario);
+            return ApiResponses::success('Encontrado', 200, $empleado);
         } catch (ModelNotFoundException $e) {
-            return ApiResponses::error('Error: usuario no encontrado', 404);
+            return ApiResponses::error('Error: empleado no encontrado', 404);
         } catch (Exception $e) {
             // Handle general exceptions (e.g., database errors)
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
@@ -128,22 +127,22 @@ class UsuarioController extends Controller
 
         try {
             $request->validate([
-                'nombre' => 'required',
-                'apellido' => 'required',
-                'username' => 'required',
-                'password' => 'required',
-                'rol' => 'required',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'edad' => 'required',
+            'sexo' => 'required',
+            'rol' => 'required',
             ]);
 
-            $usuario = Usuario::findOrFail($id);
+            $empleado = Empleado::findOrFail($id);
 
-            $usuario->nombre = $request->nombre;
-            $usuario->apellido = $request->apellido;
-            $usuario->username = $request->username;
-            $usuario->password = Hash::make($request->password);
-            $usuario->rol = $request->rol;
+            $empleado->nombre = $request->nombre;
+            $empleado->apellido = $request->apellido;
+            $empleado->edad = $request->edad;
+            $empleado->sexo = $request->sexo;
+            $empleado->rol = $request->rol;
 
-            $usuario->save();
+            $empleado->save();
 
             return ApiResponses::success('Actualizado', 201);
         } catch (ModelNotFoundException $e) {
@@ -159,11 +158,11 @@ class UsuarioController extends Controller
     public function destroy(string $id)
     {
         try {
-            $usuario = Usuario::findOrFail($id);
-            $usuario->delete();
-            return ApiResponses::success('Usuario Eliminado', 201);
+            $empleado = Empleado::findOrFail($id);
+            $empleado->delete();
+            return ApiResponses::success('Empleado Eliminado', 201);
         } catch (ModelNotFoundException $e) {
-            return ApiResponses::error('Error al eliminar usuario: ' . $e->getMessage(), 404);
+            return ApiResponses::error('Error al eliminar empleado: ' . $e->getMessage(), 404);
         }
     }
 }

@@ -68,7 +68,7 @@ class PedidoController extends Controller
             'fecha'=> $request->fecha,
             'status' => $request->nombre,
             "total" => $request->dimension,
-            "id_usuario" => $request->id_usuario,
+            "id_empleado" => $request->id_empleado,
             "id_cliente" => $request->id_cliente,
            
         ]);
@@ -149,7 +149,7 @@ class PedidoController extends Controller
             $pedido->fecha = $request->fecha;
             $pedido->status = $request->status;
             $pedido->total = $request->total;
-            $pedido->id_usuario = $request->id_usuario;
+            $pedido->id_empleado = $request->id_empleado;
             $pedido->id_cliente = $request->id_cliente;
             
     
@@ -157,11 +157,11 @@ class PedidoController extends Controller
             $pedido->save();
     
             // Respuesta exitosa, cliente actualizado
-            return ApiResponses::success('Invernadero actualizada exitosamente', 200,  $pedido);
+            return ApiResponses::success('Pedido actualizado exitosamente', 200,  $pedido);
     
         } catch (ModelNotFoundException $e) {
             // Si el cliente no se encuentra, devolver un error 404
-            return ApiResponses::error('Invernadero no encontrado', 404);
+            return ApiResponses::error('Pedido no encontrado', 404);
     
         } catch (Exception $e) {
             // Captura cualquier otro tipo de error

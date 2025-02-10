@@ -11,13 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuarios', function (Blueprint $table) {
-            $table->bigIncrements('id_usuario');
+        Schema::create('empleados', function (Blueprint $table) {
+            $table->bigIncrements('id_empleado');
             $table->string("nombre");
             $table->string("apellido");
-            $table->string("username")->unique();
-            $table->string("password");
+            $table->string("edad");
+            $table->string("sexo");
             $table->integer("rol");
+            $table->BigInteger('id_user')->unsigned()->nullable(); // Hacemos que la columna sea opcional
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('set null'); // Si se elimina eio, setea el valor a null
+
+
+
             $table->timestamps();
 
             $table->softDeletes();
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('empleados');
     }
 };

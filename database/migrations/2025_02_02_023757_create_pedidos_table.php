@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('fecha');
             $table->boolean("status");
             $table->string('total')-> nullable();
-            $table->bigInteger('id_usuario')->unsigned();
+            $table->bigInteger('id_empleado')->unsigned();
             $table->bigInteger('id_cliente')->unsigned();
 
             $table->foreign('id_cliente')->references('id_cliente')->on('clientes');
-            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios');
+            $table->foreign('id_empleado')->references('id_empleado')->on('empleados');
 
 
             $table->softDeletes();

@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Usuario extends Model
+class Empleado extends Model
 
 {
     use SoftDeletes;
 
-    protected $table = 'usuarios';
+    protected $table = 'empleados';
 
-    protected $primaryKey = 'id_usuario';
+    protected $primaryKey = 'id_empleado';
 
-    protected $fillable = ['nombre','apellido','username','password','rol'];
+    protected $fillable = ['nombre','apellido','edad','sexo','rol'];
 
     protected $casts = [
-        'id_usuario' => 'string', 
+        'id_empleado' => 'string', 
     ];
 
     protected $hidden = [
@@ -26,10 +26,10 @@ class Usuario extends Model
     ];
 
     public function ventas(){
-        return $this->hasMany(Venta::class,'id_usuario');
+        return $this->hasMany(Venta::class,'id_empleado');
     }
 
     public function pedidos(){
-        return $this->hasMany(Pedido::class,'id_usuario');
+        return $this->hasMany(Pedido::class,'id_empleado');
     }
 }

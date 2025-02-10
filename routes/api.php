@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CosechaController;
 use App\Http\Controllers\InvernaderoController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,21 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-// CRUD usuarios
-Route::resource('usuario',UsuarioController::class)
+
+Route::middleware(['auth:sanctum'])->group(function(){
+
+    Route::post('logout',[AuthController::class,'logout']);
+
+});
+
+
+Route::post('register',[AuthController::class,'store']);
+Route::post('login',[AuthController::class,'login']);
+
+
+
+// CRUD empleados
+Route::resource('empleado',EmpleadoController::class)
 ->except(['edit','create']);
 
 // CRUD clientes
@@ -45,7 +59,8 @@ Route::resource('pedido',PedidoController::class)
 
 
 // CRUD producto
-Route::resource('producto',ProductoController::class)
+Route::resource('producto', ProductoController::class)
 ->except(['edit','create']);
+
 
 

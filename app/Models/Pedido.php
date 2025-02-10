@@ -13,16 +13,16 @@ class Pedido extends Model
 
     protected $primaryKey = 'id_pedido';
 
-    protected $fillable = ['fecha', 'estatus','total', 'id_usuario', 'id_cliente'];
+    protected $fillable = ['fecha', 'estatus','total', 'id_empleado', 'id_cliente'];
 
     protected $casts = [
         'id_pedido' => 'string',
     ];
 
 
-    public function usuario () 
+    public function empleado () 
     {
-        return $this->belongsTo(Usuario::class,'id_usuario');
+        return $this->belongsTo(Empleado::class,'id_empleado');
     }
 
     public function cliente()

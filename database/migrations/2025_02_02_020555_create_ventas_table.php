@@ -15,11 +15,11 @@ return new class extends Migration
             $table->bigIncrements('id_venta');
             $table->string('fecha_creacion');
             $table->string('total');
-            $table->bigInteger('id_usuario')->unsigned();
+            $table->bigInteger('id_empleado')->unsigned();
             $table->bigInteger('id_cliente')->unsigned();
 
             $table->foreign('id_cliente')->references('id_cliente')->on('clientes');
-            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios');
+            $table->foreign('id_empleado')->references('id_empleado')->on('empleados');
 
             $table->softDeletes();
             $table->timestamps();
@@ -34,7 +34,7 @@ return new class extends Migration
 
         Schema::table('ventas', function (Blueprint $table) {
             $table->dropForeign(['id_cliente']);
-            $table->dropForeign(['id_usuario']);
+            $table->dropForeign(['id_empleado']);
         });
         Schema::dropIfExists('ventas');
     }
