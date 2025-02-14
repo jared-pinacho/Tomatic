@@ -18,17 +18,14 @@ class PedidoController extends Controller
     {
         
         try {
-            // Recuperar todas las categorías
-            $pedidos = Pedido::all();
-
-            // Verifica si hay categorías para evitar respuestas vacías innecesarias
-            if ($pedidos->isEmpty()) {
-                return ApiResponses::error('No se encontraron pedidos', 404);
-            }
-
-            return ApiResponses::success('pedidios encontrados', 200, $pedidos);
+            $productos = Pedido::all();
+    
+            return ApiResponses::success(
+                $productos->isEmpty() ? 'No se encontraron pedidos' : 'Pedidos encontrados',
+                200,
+                $productos
+            );
         } catch (Exception $e) {
-            // Captura errores generales
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
         }
 

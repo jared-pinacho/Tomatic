@@ -14,7 +14,7 @@ class Empleado extends Model
 
     protected $primaryKey = 'id_empleado';
 
-    protected $fillable = ['nombre','apellido','edad','sexo','rol'];
+    protected $fillable = ['nombre','apellido','edad','sexo'];
 
     protected $casts = [
         'id_empleado' => 'string', 

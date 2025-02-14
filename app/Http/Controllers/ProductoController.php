@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Responses\ApiResponses;
 use App\Models\Producto;
-use App\Models\Venta;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -19,19 +18,19 @@ class ProductoController extends Controller
     {
         try {
             $productos = Producto::all();
-        
-            // Si la colección está vacía, devuelve un error
-            if ($productos->isEmpty()) {
-                return ApiResponses::error('No se encontraron productos', 404);
-            }
-        
-            return ApiResponses::success('Productos encontrados', 200, $productos);
-        } catch (\Exception $e) {
-            // Captura errores generales si algo sale mal
+    
+            return ApiResponses::success(
+                $productos->isEmpty() ? 'No se encontraron productos' : 'Productos encontrados',
+                200,
+                $productos
+            );
+        } catch (Exception $e) {
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
         }
-        
     }
+    
+
+
 
     /**
      * Show the form for creating a new resource.

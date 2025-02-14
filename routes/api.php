@@ -16,6 +16,13 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
+Route::post('login',[AuthController::class,'login']);
+
+// CRUD producto
+Route::resource('producto', ProductoController::class)
+->except(['edit','create']);
+
+
 
 Route::middleware(['auth:sanctum'])->group(function(){
 
@@ -24,33 +31,58 @@ Route::middleware(['auth:sanctum'])->group(function(){
 });
 
 
+
+
+Route::middleware(['auth:sanctum', 'checkAdminRole'])->group(function () {
+
+
+//registar usuario
 Route::post('register',[AuthController::class,'store']);
-Route::post('login',[AuthController::class,'login']);
 
 
+//regresar usuarios
+Route::get('users',[AuthController::class,'index']);
 
+//eliminarr usuario
+Route::post('eliminar/user',[AuthController::class,'destroy']);
+
+
+   
 // CRUD empleados
 Route::resource('empleado',EmpleadoController::class)
 ->except(['edit','create']);
 
-// CRUD clientes
-Route::resource('cliente',ClienteController::class)
-->except(['edit','create']);
-
-// CRUD categorias
-Route::resource('categoria',CategoriaController::class)
-->except(['edit','create']);
-
+    
 // CRUD invernaderos
 Route::resource('invernadero',InvernaderoController::class)
 ->except(['edit','create']);
 
 Route::get('invernadero/cosechas/{id}', [InvernaderoController::class, 'cosechas']);
 
-
 // CRUD cosecha
 Route::resource('cosecha',CosechaController::class)
 ->except(['edit','create']);
+
+
+// CRUD categorias
+Route::resource('categoria',CategoriaController::class)
+->except(['edit','create']);
+
+
+
+
+});
+
+
+
+
+Route::middleware(['auth:sanctum', 'checkVendedorRole'])->group(function () {
+   
+
+// CRUD clientes
+Route::resource('cliente',ClienteController::class)
+->except(['edit','create']);
+
 
 
 // CRUD pedido
@@ -58,9 +90,15 @@ Route::resource('pedido',PedidoController::class)
 ->except(['edit','create']);
 
 
-// CRUD producto
-Route::resource('producto', ProductoController::class)
-->except(['edit','create']);
+
+
+
+
+});
+
+
+
+
 
 
 

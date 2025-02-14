@@ -17,17 +17,14 @@ class InvernaderoController extends Controller
     public function index()
     {
         try {
-            // Recuperar todas las categorías
             $invernaderos = Invernadero::all();
-
-            // Verifica si hay categorías para evitar respuestas vacías innecesarias
-            if ($invernaderos->isEmpty()) {
-                return ApiResponses::error('No se encontraron invernaderos', 404);
-            }
-
-            return ApiResponses::success('Invernaderos encontrados', 200, $invernaderos);
+    
+            return ApiResponses::success(
+                $invernaderos->isEmpty() ? 'No se encontraron invernaderos' : 'Invernaderos encontrados',
+                200,
+                $invernaderos
+            );
         } catch (Exception $e) {
-            // Captura errores generales
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
         }
     }

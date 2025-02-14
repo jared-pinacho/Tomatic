@@ -19,16 +19,15 @@ class ClienteController extends Controller
     {
         try {
             $clientes = Cliente::all();
-
-            return ApiResponses::success('Encontrado', 200, $clientes);
-        } catch (ModelNotFoundException $e) {
-            return ApiResponses::error('Error: clientes no encontrados', 404);
+    
+            return ApiResponses::success(
+                $clientes->isEmpty() ? 'No se encontraron clientes' : 'Clientes encontrados',
+                200,
+                $clientes
+            );
         } catch (Exception $e) {
-            // Handle general exceptions (e.g., database errors)
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
         }
-
-
     }
 
     /**

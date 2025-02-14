@@ -17,17 +17,14 @@ class CategoriaController extends Controller
     public function index()
     {
         try {
-            // Recuperar todas las categorías
             $categorias = Categoria::all();
-
-            // Verifica si hay categorías para evitar respuestas vacías innecesarias
-            if ($categorias->isEmpty()) {
-                return ApiResponses::error('No se encontraron categorías', 404);
-            }
-
-            return ApiResponses::success('Categorías encontradas', 200, $categorias);
+    
+            return ApiResponses::success(
+                $categorias->isEmpty() ? 'No se encontraron categorias' : 'Categorias encontradas',
+                200,
+                $categorias
+            );
         } catch (Exception $e) {
-            // Captura errores generales
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
         }
     }
@@ -88,23 +85,21 @@ class CategoriaController extends Controller
      * Display the specified resource.
      */
     public function show($id)
-    {
-        try {
-            // Buscar la categoría por ID
-            $categoria = Categoria::findOrFail($id);
-    
-         
-            return ApiResponses::success('Categoría encontrada', 200, $categoria);
-    
-        } catch (ModelNotFoundException $e) {
-            // Si no se encuentra la categoría, devolver un error 404
-            return ApiResponses::error('Categoría no encontrada', 404);
-    
-        } catch (Exception $e) {
-            // Captura cualquier otro error y devolver una respuesta de error general
-            return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
-        }
+{
+    try {
+        // Buscar la categoría por ID
+        $categoria = Categoria::findOrFail($id);
+
+        return ApiResponses::success('Categoría encontrada', 200, $categoria);
+    } catch (ModelNotFoundException $e) {
+        // Captura explícita cuando no se encuentra el modelo
+        return ApiResponses::error('No se encontró la categoría', 404);
+    } catch (Exception $e) {
+        // Captura otros tipos de excepciones generales
+        return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
     }
+}
+
     
 
     /**

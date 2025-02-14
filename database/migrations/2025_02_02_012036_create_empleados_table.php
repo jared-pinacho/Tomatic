@@ -17,11 +17,6 @@ return new class extends Migration
             $table->string("apellido");
             $table->string("edad");
             $table->string("sexo");
-            $table->integer("rol");
-            $table->BigInteger('id_user')->unsigned()->nullable(); // Hacemos que la columna sea opcional
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('set null'); // Si se elimina eio, setea el valor a null
-
-
 
             $table->timestamps();
 

@@ -19,17 +19,14 @@ class CosechaController extends Controller
     public function index()
     {
         try {
-            // Recuperar todas las categorías
             $cosechas = Cosecha::all();
-
-            // Verifica si hay categorías para evitar respuestas vacías innecesarias
-            if ($cosechas->isEmpty()) {
-                return ApiResponses::error('No se encontraron cosechas', 404);
-            }
-
-            return ApiResponses::success('cosechas encontradas', 200, $cosechas);
+    
+            return ApiResponses::success(
+                $cosechas->isEmpty() ? 'No se encontraron cosechas' : 'cosechas encontrados',
+                200,
+                $cosechas
+            );
         } catch (Exception $e) {
-            // Captura errores generales
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
         }
     }
@@ -190,7 +187,7 @@ class CosechaController extends Controller
     
         } catch (Exception $e) {
             // Captura cualquier otro tipo de error y devuelve un error genérico
-            return ApiResponses::error('Error al eliminar Invernadero: ' . $e->getMessage(), 500);
+            return ApiResponses::error('Error al eliminar Cosecha: ' . $e->getMessage(), 500);
         }
 
 

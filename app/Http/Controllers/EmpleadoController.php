@@ -22,13 +22,14 @@ class EmpleadoController extends Controller
     {
 
         try {
-            $empleados= Empleado::all();
-
-            return ApiResponses::success('Encontrado', 200, $empleados);
-        } catch (ModelNotFoundException $e) {
-            return ApiResponses::error('Error: empleados no encontrados', 404);
+            $empleados = Empleado::all();
+    
+            return ApiResponses::success(
+                $empleados->isEmpty() ? 'No se encontraron empleados' : 'Empleados encontrados',
+                200,
+                $empleados
+            );
         } catch (Exception $e) {
-            // Handle general exceptions (e.g., database errors)
             return ApiResponses::error('Error interno: ' . $e->getMessage(), 500);
         }
     }
@@ -53,7 +54,8 @@ class EmpleadoController extends Controller
             'apellido' => 'required',
             'edad' => 'required',
             'sexo' => 'required',
-            'rol' => 'required',
+            
+            
         ]);
 
         if ($validator->fails()) {
@@ -73,7 +75,6 @@ class EmpleadoController extends Controller
             "apellido" => $request->apellido,
             "edad" => $request->edad,
             "sexo" => $request->sexo,
-            "rol" => $request->rol,
         ]);
 
         if (!$empleado) {
@@ -131,8 +132,7 @@ class EmpleadoController extends Controller
             'apellido' => 'required',
             'edad' => 'required',
             'sexo' => 'required',
-            'rol' => 'required',
-            ]);
+                        ]);
 
             $empleado = Empleado::findOrFail($id);
 
@@ -140,7 +140,7 @@ class EmpleadoController extends Controller
             $empleado->apellido = $request->apellido;
             $empleado->edad = $request->edad;
             $empleado->sexo = $request->sexo;
-            $empleado->rol = $request->rol;
+            
 
             $empleado->save();
 

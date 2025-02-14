@@ -26,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol'
     ];
 
     /**
@@ -50,13 +51,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-
-    public function empleado()
-    {
-        return $this->hasOne(Empleado::class, 'id_empleado','id_empleado');
-    }
-
 
 
 }
